@@ -1,14 +1,22 @@
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NativeScriptModule } from '@nativescript/angular';
+import { APP_INITIALIZER, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NativeScriptCommonModule, NativeScriptModule } from '@nativescript/angular';
 
-import { AppRoutingModule } from './app-routing.module';
+// import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { DatabaseService, initDatabase } from './core/db/database.service';
 
 @NgModule({
   bootstrap: [AppComponent],
-  imports: [NativeScriptModule, AppRoutingModule],
+  imports: [NativeScriptModule, NativeScriptCommonModule],
   declarations: [AppComponent],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => initDatabase,
+      multi: true,
+    },
+    DatabaseService
+  ],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class AppModule {}
