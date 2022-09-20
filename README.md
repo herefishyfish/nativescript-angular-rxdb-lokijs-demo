@@ -1,3 +1,7 @@
-# nativescript-stackblitz-templates-ipkbuh
+# nativescript-angular-rxdb-lokijs-demo
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/nativescript-stackblitz-templates-ipkbuh)
+Needs @valor/nativescript-websockets added to the preview application to work!
+[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/nativescript-angular-rxdb-lokijs-demo)
+
+## Run locally 
+`ns run [android|ios]`
