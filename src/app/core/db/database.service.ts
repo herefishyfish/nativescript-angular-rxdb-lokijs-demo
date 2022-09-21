@@ -45,7 +45,7 @@ async function _create(): Promise<any> {
     });
 
     console.log('Creating Replication');
-    await database.heroes.syncGraphQL({
+    const replicationState = await database.heroes.syncGraphQL({
         url: {
             http: 'https://working-oriole-73.hasura.app/v1/graphql',
             ws: 'wss://working-oriole-73.hasura.app/v1/graphql',
@@ -65,6 +65,11 @@ async function _create(): Promise<any> {
         live: true,
         autoStart: true,
         deletedField: 'deleted',
+    });
+
+    replicationState.error$.subscribe(err => {
+        console.error('replication error:');
+        console.dir(err);
     });
 
     return database;

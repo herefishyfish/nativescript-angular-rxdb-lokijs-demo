@@ -29,6 +29,9 @@ function getGraphQLWebSocket(url: string, headers = {}): Client {
     const wsClient = createClient({
       url,
       shouldRetry: () => true,
+      connectionParams: {
+        headers
+      },
     });
     has = {
       url,
@@ -137,7 +140,7 @@ function syncHasuraGraphQL<RxDocType, CheckpointType>(
   const startBefore = graphqlReplicationState.start.bind(graphqlReplicationState);
   graphqlReplicationState.start = () => {
     if (mustUseSocket) {
-      const wsClient = getGraphQLWebSocket(ensureNotFalsy(url.ws));
+      const wsClient = getGraphQLWebSocket(ensureNotFalsy(url.ws), headers ?? {});
 
       wsClient.on('connected', () => {
         pullStream$.next('RESYNC');
@@ -148,7 +151,9 @@ function syncHasuraGraphQL<RxDocType, CheckpointType>(
       wsClient.subscribe(query, {
         next: (data: any) => {
           const firstField = Object.keys(data.data)[0];
-          pullStream$.next(data.data[firstField]);
+          const docsData = data.data[firstField];
+          const newCheckpoint = getCheckpoint(data.data[firstField]);
+          pullStream$.next({ documents: docsData, checkpoint: newCheckpoint } as any);
         },
         error: (error: any) => {
           pullStream$.error(error);
