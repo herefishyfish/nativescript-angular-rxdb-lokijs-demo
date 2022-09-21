@@ -8,23 +8,23 @@ import 'zone.js/dist/zone-patch-rxjs';
   template: `
     <GridLayout rows="*, auto" columns="*, auto">
       <ScrollView class="scroll-view">
-        <StackLayout>
-          <Label 
-          *ngFor="let hero of heros$ | async" 
-          [text]="hero.name" textWrap="true" 
-          class="px-2 py-1 mx-2 my-1 text-center rounded-full" 
-          [backgroundColor]="hero?.color">
-        </Label>
-        
-      </StackLayout>
-    </ScrollView>
-    <Button class="button m-2 rounded-full bg-blue-300" text="Add a new hero!" (tap)="addHero()"></Button>
-  </GridLayout>
+        <StackLayout class="content">
+          <app-hero 
+            *ngFor="let hero of heros$ | async" 
+            [hero]="hero">
+          </app-hero>
+        </StackLayout>
+      </ScrollView>
+      <Button class="button m-2 rounded-full bg-blue-300" text="Add a new hero!" (tap)="addHero()"></Button>
+    </GridLayout>
 `,
 styles:[`
   .scroll-view { 
     row-span: 2;
     col-span: 2;
+  }
+  .content {
+    padding: 10;
   }
   .button: {
     row: 2;

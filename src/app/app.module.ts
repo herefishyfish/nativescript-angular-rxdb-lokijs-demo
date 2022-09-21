@@ -4,11 +4,12 @@ import { NativeScriptCommonModule, NativeScriptModule } from '@nativescript/angu
 // import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DatabaseService, initDatabase } from './core/db/database.service';
+import { HeroComponent } from './components/hero.component';
 
 @NgModule({
   bootstrap: [AppComponent],
   imports: [NativeScriptModule, NativeScriptCommonModule],
-  declarations: [AppComponent],
+  declarations: [AppComponent, HeroComponent],
   providers: [
     {
       provide: APP_INITIALIZER,
