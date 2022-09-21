@@ -38,18 +38,16 @@ export class AppComponent implements OnDestroy, OnInit {
   heros$: Observable<any[]>;
 
   ngOnInit(): void {
-    initDatabase().then(() => {
-      this.heros$ = this._rxdb.database.heroes
-        .find({
-          selector: {},
-          sort: [{ name: 'asc' }],
+    this.heros$ = this._rxdb.database.heroes
+      .find({
+        selector: {},
+        sort: [{ name: 'asc' }],
+      })
+      .$.pipe(
+        tap((hero: any[]) => {
+          console.log(hero.map((e) => e.name));
         })
-        .$.pipe(
-          tap((hero: any[]) => {
-            console.log(hero.map((e) => e.name));
-          })
-        );
-    })
+      );
   }
 
   ngOnDestroy(): void {
