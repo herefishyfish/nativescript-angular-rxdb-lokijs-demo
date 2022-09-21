@@ -13,7 +13,7 @@
     "@angular/platform-browser-dynamic": "~14.2.0",
     "@angular/router": "~14.2.0",
     "@herefishyfish/nativescript-lokijs-adapter": "^0.0.1",
-    "@herefishyfish/rxdb": "^0.0.1",
+    "@herefishyfish/nativescript-rxdb": "^1.0.0",
     "@nativescript/angular": "~14.2.0",
     "@nativescript/core": "~8.3.0",
     "@nativescript/tailwind": "^2.0.0",

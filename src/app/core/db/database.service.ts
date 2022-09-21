@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LokiNativescriptAdapter } from '@herefishyfish/nativescript-lokijs-adapter';
-import { v4 } from '@herefishyfish/rxdb';
+import { v4 } from '@herefishyfish/nativescript-rxdb';
 import { Dialogs } from '@nativescript/core';
 import { addRxPlugin, createRxDatabase, RxDatabase } from 'rxdb';
 import { getRxStorageLoki } from 'rxdb/plugins/lokijs';
@@ -17,7 +17,7 @@ async function loadRxDBPlugins(): Promise<void> {
 async function _create(): Promise<any> {
     await loadRxDBPlugins();
 
-    console.log('Creating Database');
+    console.log('Creating Database.');
     const database = await createRxDatabase({
         name: 'herodb',
         storage: getRxStorageLoki({
