@@ -44,10 +44,7 @@ export class HeroComponent {
   }
 
   async onLongPress(event: GestureEventData) {
-    if (isIOS) {
-      console.log(event.ios.state);
-      if(event.ios.state !== UIGestureRecognizerState.Ended) return;
-    }
+    if (isIOS && event.ios.state !== UIGestureRecognizerState.Ended) return;
 
     const result = await Dialogs.confirm('Are you sure you would like to delete this hero?');
 
