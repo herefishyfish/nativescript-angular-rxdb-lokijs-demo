@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { Dialogs } from '@nativescript/core';
+import { Dialogs, GestureEventData, isIOS } from '@nativescript/core';
 import { DatabaseService } from '../core/db/database.service';
 import { RxHeroDocumentType } from '../core/db/schema';
 import { RxDocument } from 'rxdb';
@@ -7,7 +7,7 @@ import { RxDocument } from 'rxdb';
 @Component({
   selector: 'app-hero',
   template: `
-    <StackLayout class="hero-card" (tap)="onTap()" (longPress)="onLongPress()" orientation="horizontal">
+    <StackLayout class="hero-card" (tap)="onTap()" (longPress)="onLongPress($event)" orientation="horizontal">
       <Label text="{{ hero?.name }}'s favorite color is: " textWrap="true"></Label>
       <StackLayout width="20" height="20" [backgroundColor]="hero?.color"></StackLayout>
     </StackLayout>
@@ -43,7 +43,12 @@ export class HeroComponent {
     });
   }
 
-  async onLongPress() {
+  async onLongPress(event: GestureEventData) {
+    if (isIOS) {
+      console.log(event.ios.state);
+      if(event.ios.state !== UIGestureRecognizerState.Ended) return;
+    }
+
     const result = await Dialogs.confirm('Are you sure you would like to delete this hero?');
 
     if(result) {

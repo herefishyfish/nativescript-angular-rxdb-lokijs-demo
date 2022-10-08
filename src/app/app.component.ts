@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core'
-import { Subject, Observable, tap } from 'rxjs';
-import { DatabaseService, initDatabase } from './core/db/database.service'
+import { Component, OnInit, inject } from '@angular/core'
+import { Observable, tap } from 'rxjs';
+import { DatabaseService } from './core/db/database.service'
 import 'zone.js/dist/zone-patch-rxjs';
 
 @Component({
@@ -15,7 +15,11 @@ import 'zone.js/dist/zone-patch-rxjs';
           </app-hero>
         </StackLayout>
       </ScrollView>
-      <Button class="button m-2 rounded-full bg-blue-300" text="Add a new hero!" (tap)="addHero()"></Button>
+      <Button 
+        class="button m-2 p-4 font-bold text-white rounded-full bg-blue-300"
+        text="Add a new hero!"
+        (tap)="addHero()">
+      </Button>
     </GridLayout>
 `,
 styles:[`
@@ -32,9 +36,8 @@ styles:[`
   }
 `]
 })
-export class AppComponent implements OnDestroy, OnInit {
+export class AppComponent implements OnInit {
   _rxdb = inject(DatabaseService);
-  destroy$ = new Subject<void>();
   heros$: Observable<any[]>;
 
   ngOnInit(): void {
@@ -48,11 +51,6 @@ export class AppComponent implements OnDestroy, OnInit {
           console.log(hero.map((e) => e.name));
         })
       );
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   addHero() {
