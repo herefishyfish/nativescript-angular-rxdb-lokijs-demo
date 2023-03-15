@@ -7,16 +7,22 @@ import { RxDocument } from 'rxdb';
 @Component({
   selector: 'app-hero',
   template: `
-    <StackLayout class="hero-card" (tap)="onTap()" (longPress)="onLongPress($event)" orientation="horizontal">
-      <Label text="{{ hero?.name }}'s favorite color is: " textWrap="true"></Label>
-      <StackLayout width="20" height="20" [backgroundColor]="hero?.color"></StackLayout>
+    <StackLayout 
+      class="hero-card"
+      [borderColor]="hero?.color"
+      (tap)="onTap()"
+      (longPress)="onLongPress($event)"
+      orientation="horizontal">
+      <Label textWrap="true">
+        {{ hero?.name }}
+      </Label>
     </StackLayout>
   `,
   styles: [
     `
       .hero-card {
         border-radius: 4;
-        border-width: 1;
+        border-width: 2;
         border-color: #d3d3d4;
         padding: 10;
         width: 100%;
@@ -46,9 +52,11 @@ export class HeroComponent {
   async onLongPress(event: GestureEventData) {
     if (isIOS && event.ios.state !== UIGestureRecognizerState.Ended) return;
 
-    const result = await Dialogs.confirm('Are you sure you would like to delete this hero?');
+    const result = await Dialogs.confirm(
+      'Are you sure you would like to delete this hero?'
+    );
 
-    if(result) {
+    if (result) {
       this.hero.remove();
     }
   }
