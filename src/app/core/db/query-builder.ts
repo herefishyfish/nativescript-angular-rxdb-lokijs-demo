@@ -28,7 +28,9 @@ export const pushQueryBuilder = (docs) => {
 
 export const pullQueryBuilder = (checkpoint, limit) => {
   // the first pull does not have a start-document
-  const sortByValue = checkpoint ? checkpoint['updatedAt'] : new Date(0).toISOString();
+  const sortByValue = checkpoint
+    ? checkpoint['updatedAt']
+    : new Date(0).toISOString();
   const query = `query MyQuery {
     hero(where: {updatedAt: {_gt: "${sortByValue}"}}, order_by: {updatedAt: asc}) {
       color
@@ -46,15 +48,15 @@ export const pullQueryBuilder = (checkpoint, limit) => {
   };
 };
 
-export const pullStreamQueryBuilder = () => {
+export const pullStreamQueryBuilder = (headers) => {
   const query = `subscription HeroSubscription {
-    hero {
-      name
-      id
-      updatedAt
+    hero_stream(cursor: {initial_value: {updatedAt: "${new Date().toISOString()}"}}, batch_size: 10) {
+      color
       createdAt
       deleted
-      color
+      id
+      name
+      updatedAt
     }
   }`;
 
